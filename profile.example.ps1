@@ -12,12 +12,14 @@ Import-Module .\posh-git
 function global:prompt {
     $realLASTEXITCODE = $LASTEXITCODE
 
-    Write-Host($pwd.ProviderPath) -nonewline
+    # Make it look similar to a *nix shell
+    $p = Split-Path -leaf -path (Get-Location)
+    Write-Host "[$env:USERNAME@$env:COMPUTERNAME $p]" -nonewline
 
     Write-VcsStatus
 
     $global:LASTEXITCODE = $realLASTEXITCODE
-    return "> "
+    return "# "
 }
 
 Pop-Location
